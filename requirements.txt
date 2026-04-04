@@ -1,0 +1,12 @@
+Flask
+flask-cors
+fastapi
+uvicorn
+python-multipart
+pydub
+soundfile
+python-dotenv
+pandas
+SpeechRecognition
+vosk
+gunicorn
