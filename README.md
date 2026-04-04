@@ -1,0 +1,5 @@
+# 🎤 Speech Fluency Trainer
+
+A full-stack web application for improving communication skills through interactive
+speaking activities — featuring real-time speech recognition, word-by-word highlighting,
+audio recording, and performance scoring.
