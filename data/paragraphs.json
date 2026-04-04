@@ -1,0 +1,71 @@
+{
+  "easy": [
+    {
+      "id": "e1",
+      "title": "A Beautiful Morning",
+      "text": "The sun rose slowly over the hills. Birds began to sing in the trees. A gentle breeze moved through the leaves. The day was calm and clear. Children ran outside to play in the warm morning light. Dogs barked and cats stretched lazily on doorsteps. It was a perfect day for a long walk in the park. The sky was a bright shade of blue with just a few white clouds. Flowers bloomed in every garden along the road. People smiled and waved to each other as they passed by.",
+      "word_count": 85,
+      "theme": "Nature"
+    },
+    {
+      "id": "e2",
+      "title": "The Joy of Reading",
+      "text": "Reading is a wonderful habit that helps the mind grow strong. Books take us to places we have never been before. They teach us about people, ideas, and the world around us. Even just thirty minutes of reading each day can make a big difference in your life. You can learn new words and see the world from different points of view. Pick up a book today and let your imagination soar to new heights. Libraries are full of amazing stories just waiting to be discovered. Reading opens doors that nothing else can open.",
+      "word_count": 90,
+      "theme": "Learning"
+    },
+    {
+      "id": "e3",
+      "title": "Good Habits",
+      "text": "Good habits are the building blocks of a happy and healthy life. Waking up early gives you more time to get things done. Eating healthy food keeps your body strong and your mind sharp. Exercise every day, even if it is just a short walk around the block. Drink plenty of water and get enough sleep each night. These small choices add up over time and lead to big results. Start with one good habit and build from there. Soon you will see how much better you feel each day.",
+      "word_count": 88,
+      "theme": "Wellness"
+    }
+  ],
+  "medium": [
+    {
+      "id": "m1",
+      "title": "The Art of Communication",
+      "text": "Effective communication is the foundation of every successful relationship, whether personal or professional. When people express themselves clearly and listen actively, misunderstandings become rare and collaboration flourishes naturally. The art of speaking involves not just choosing the right words, but also managing tone, pace, and clarity with intention. A skilled communicator reads the room and adapts their style to match the audience and context. Practicing regularly with a variety of texts helps build confidence and fluency over time. Public speaking, once feared, becomes a powerful tool when approached with preparation and genuine desire to connect with others.",
+      "word_count": 98,
+      "theme": "Communication"
+    },
+    {
+      "id": "m2",
+      "title": "Technology and Society",
+      "text": "Technology has fundamentally transformed the way we interact with the world around us every single day. From smartphones that fit comfortably in our pockets to sophisticated algorithms that power complex decision-making systems, innovation continues to reshape every industry and profession. As digital tools become more deeply integrated into our daily lives and work routines, the ability to adapt and continuously learn new skills becomes increasingly valuable and necessary. Critical thinking about technology—understanding both its benefits and its limitations—helps individuals navigate this rapidly changing landscape with confidence. Those who embrace lifelong learning find themselves better equipped to thrive in a world where change is the only constant.",
+      "word_count": 107,
+      "theme": "Technology"
+    },
+    {
+      "id": "m3",
+      "title": "Mindfulness in Daily Life",
+      "text": "Mindfulness is the practice of paying deliberate and non-judgmental attention to the present moment. In a world full of constant distractions, notifications, and competing demands, developing awareness of our thoughts and feelings can seem remarkably difficult. Yet research consistently shows that even brief periods of mindful attention can reduce stress, improve focus, and enhance overall well-being significantly. Simple practices like deep breathing, intentional observation of surroundings, or mindful eating can anchor us in the present and interrupt cycles of anxious thinking. The key is not perfection but consistent practice, building gradually toward a more conscious and deliberate way of moving through each day.",
+      "word_count": 105,
+      "theme": "Wellness"
+    }
+  ],
+  "hard": [
+    {
+      "id": "h1",
+      "title": "Linguistic Fluency",
+      "text": "The phenomenon of linguistic fluency encompasses far more than the mere mechanical reproduction of phonemes and syllables in correct sequential order. It involves the seamless integration of prosody, rhythm, articulation, and semantic comprehension—all orchestrated simultaneously at speeds that appear entirely effortless to the trained and experienced speaker. Researchers in psycholinguistics suggest that fluency is not a binary state but rather a dynamic spectrum of proficiencies, each uniquely shaped by cognitive load, contextual familiarity, emotional state, and neurological automaticity. The fluent speaker navigates ambiguity, recovers gracefully from interruption, and modulates expressive elements such as stress and intonation with remarkable spontaneity. Achieving this level of mastery requires sustained deliberate practice across diverse communicative contexts and unrelenting exposure to authentic linguistic input.",
+      "word_count": 115,
+      "theme": "Linguistics"
+    },
+    {
+      "id": "h2",
+      "title": "Organizational Communication",
+      "text": "Contemporary organizational behavior scholars consistently emphasize that sophisticated interpersonal communication competencies constitute a significant and measurable determinant of executive performance and institutional effectiveness across all sectors. Organizations that deliberately cultivate psychologically safe environments—wherein individuals articulate divergent perspectives authentically without fear of reprisal—demonstrate measurably superior innovation metrics, collaborative synergies, and resilience when navigating unprecedented disruptions and marketplace volatility. The paradox of organizational communication lies in its simultaneous simplicity and extraordinary complexity: while the fundamental mechanics of transmitting information appear straightforward, the nuanced interplay of hierarchical dynamics, cultural assumptions, emotional intelligence, and implicit expectations renders truly effective organizational dialogue exceptionally difficult to achieve and maintain consistently over time.",
+      "word_count": 112,
+      "theme": "Business"
+    },
+    {
+      "id": "h3",
+      "title": "The Philosophy of Language",
+      "text": "Ludwig Wittgenstein famously declared that the limits of one's language constitute the limits of one's world—a proposition that continues to reverberate throughout contemporary philosophy of mind, cognitive science, and linguistic anthropology with extraordinary provocative force. If the conceptual structures embedded within our linguistic frameworks genuinely constrain the thoughts we are capable of entertaining and articulating, then the deliberate and systematic expansion of one's vocabulary and grammatical repertoire represents not merely an aesthetic or professional enhancement but a fundamentally epistemic endeavor of considerable philosophical significance. The acquisition of additional languages, the mastery of technical terminologies across disparate disciplines, and the cultivation of rhetorical versatility collectively expand the cognitive horizon within which meaning-making, critical analysis, and creative synthesis become possible and productive.",
+      "word_count": 120,
+      "theme": "Philosophy"
+    }
+  ]
+}
