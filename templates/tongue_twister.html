@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% set active_page = "tongue-twister" %}
+{% block title %}Tongue Twister Practice — SFT{% endblock %}
+
+{% block content %}
+<div class="activity-page" id="tt-page">
+
+  <!-- ── SETUP SECTION ─────────────────────────────── -->
+  <section class="activity-section" id="tt-setup">
+    <div class="page-header">
+      <div class="page-header-icon">👅</div>
+      <div>
+        <h1 class="page-title">Tongue Twister Practice</h1>
+        <p class="page-subtitle">Train clarity and articulation with curated tongue twisters</p>
+      </div>
+    </div>
+
+    <div class="setup-grid">
+      <!-- Left: Config -->
+      <div class="setup-config">
+
+        <div class="setup-section">
+          <div class="setup-section-label">Category</div>
+          <div class="option-group">
+            <button class="option-pill tt-cat-btn selected" data-cat="communication">💬 Communication</button>
+            <button class="option-pill tt-cat-btn" data-cat="technical">💻 Technical</button>
+            <button class="option-pill tt-cat-btn" data-cat="tricky_fun">🎪 Tricky & Fun</button>
+            <button class="option-pill tt-cat-btn" data-cat="all">🌀 All Mixed</button>
+          </div>
+        </div>
+
+        <div class="setup-section">
+          <div class="setup-section-label">Target Speed</div>
+          <div class="speed-cards">
+            <div class="speed-card tt-speed-btn" data-speed="slow">
+              <div class="speed-emoji">🐢</div>
+              <div class="speed-name">Slow</div>
+              <div class="speed-wpm">50 WPM · Clarity</div>
+            </div>
+            <div class="speed-card tt-speed-btn selected" data-speed="medium">
+              <div class="speed-emoji">🚶</div>
+              <div class="speed-name">Medium</div>
+              <div class="speed-wpm">100 WPM · Natural</div>
+            </div>
+            <div class="speed-card tt-speed-btn" data-speed="fast">
+              <div class="speed-emoji">🚀</div>
+              <div class="speed-name">Fast</div>
+              <div class="speed-wpm">150 WPM · Challenge</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <p>
+            📋 <strong>Session:</strong> 5 tongue twisters, one at a time.<br>
+            🎤 <strong>Mic:</strong> Enable microphone, then read each twister aloud.<br>
+            🟢 <strong style="color:var(--word-correct)">Green</strong> = correct &nbsp;
+            🔴 <strong style="color:var(--word-incorrect)">Red</strong> = incorrect<br>
+            🔢 <strong>Numbers:</strong> Spoken digits auto-convert to words for matching.
+          </p>
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-full" id="btn-start-tt">
+          🎤 Start Session
+        </button>
+      </div>
+
+      <!-- Right: Preview -->
+      <div class="setup-preview">
+        <div class="preview-card">
+          <div class="preview-label">Sample Twister Preview</div>
+          <div class="preview-text" id="tt-preview-text">
+            Select a category and click Start to begin your session.
+          </div>
+          <div class="preview-meta">
+            <span class="tag tag-mint" id="tt-preview-cat">Communication</span>
+            <span class="tag tag-blue" id="tt-preview-diff"></span>
+          </div>
+        </div>
+        <div class="preview-tip">
+          <div class="tip-icon">💡</div>
+          <div class="tip-text">Start with <strong>Slow (50 WPM)</strong> to build accuracy,
+            then increase speed as you improve.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SESSION SECTION ────────────────────────────── -->
+  <section class="activity-section hidden" id="tt-session">
+
+    <!-- Top bar -->
+    <div class="session-topbar">
+      <div class="session-progress-wrap">
+        <div class="session-progress-label">
+          <span id="tt-progress-label">1 / 5</span>
+          <span id="tt-speed-label">Medium · 100 WPM</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="tt-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="session-stats">
+        <div class="stat-chip" id="tt-timer-chip">⏱ 0:00</div>
+        <div class="stat-chip active" id="tt-wpm-chip">— WPM</div>
+        <button class="btn btn-secondary btn-sm" id="btn-exit-tt">✕ Exit</button>
+      </div>
+    </div>
+
+    <!-- Text card -->
+    <div class="text-display-card">
+      <div class="text-meta">
+        <div class="text-meta-left">
+          <span class="text-badge tt-badge">👅 Twister</span>
+          <span class="text-counter" id="tt-counter">1 of 5</span>
+        </div>
+        <span class="text-badge" id="tt-diff-badge" style="background:var(--blue-glow);color:var(--blue-accent)"></span>
+      </div>
+      <div class="reading-text" id="tt-reading-text">Loading…</div>
+    </div>
+
+    <!-- Score bar -->
+    <div class="word-score-bar">
+      <div class="word-score-item"><span class="dot dot-correct"></span>Correct: <strong id="tt-correct-count">0</strong></div>
+      <div class="word-score-item"><span class="dot dot-incorrect"></span>Incorrect: <strong id="tt-incorrect-count">0</strong></div>
+      <div class="word-score-item" style="margin-left:auto;font-size:11px;color:var(--text-muted)">
+        🟢 correct &nbsp; 🔴 incorrect &nbsp; 🟡 current word
+      </div>
+    </div>
+
+    <!-- Live transcript -->
+    <div class="transcript-display" id="tt-transcript">Enable microphone and start reading aloud…</div>
+
+    <!-- Controls -->
+    <div class="controls-area">
+      <div class="controls-left">
+        <button class="mic-btn" id="mic-btn-tt" title="Enable microphone">
+          <span class="mic-icon">🎤</span>
+        </button>
+        <div class="rec-controls">
+          <div class="rec-indicator" id="rec-indicator-tt">
+            <div class="rec-dot"></div>
+            <span class="rec-label">OFF</span>
+          </div>
+          <button class="btn btn-secondary btn-sm hidden" id="btn-download-tt">⬇ Download</button>
+          <button class="btn btn-secondary btn-sm hidden" id="btn-playback-tt">▶ Play Back</button>
+          <audio id="audio-playback-tt" style="display:none"></audio>
+        </div>
+      </div>
+      <div class="controls-right">
+        <button class="btn btn-secondary" id="btn-end-tt-session">✓ Finish &amp; Score</button>
+        <button class="btn btn-primary" id="btn-next-twister">Next →</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── RESULTS SECTION ────────────────────────────── -->
+  <section class="activity-section hidden" id="tt-results">
+    <div class="results-container">
+      <div id="tt-trophy" class="results-trophy">🏆</div>
+      <div id="tt-result-title" class="results-title">Session Complete!</div>
+      <div id="tt-result-subtitle" class="results-subtitle"></div>
+
+      <div class="results-score-ring">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle class="score-ring-bg" cx="90" cy="90" r="80"/>
+          <circle class="score-ring-fill" id="tt-score-ring" cx="90" cy="90" r="80"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-ring-number" id="tt-score-number">—%</div>
+          <div class="score-ring-label">Accuracy</div>
+        </div>
+      </div>
+
+      <div class="results-metrics">
+        <div class="metric-card">
+          <div class="metric-value text-mint" id="tt-res-accuracy">—%</div>
+          <div class="metric-label">Accuracy</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="tt-res-wpm">—</div>
+          <div class="metric-label">Words/Min</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="tt-res-feedback">—</div>
+          <div class="metric-label">Speed Rating</div>
+        </div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="feedback-heading">💬 Coach Feedback</div>
+        <div class="feedback-text" id="tt-feedback-text">—</div>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn btn-primary" id="btn-tt-retry">🔁 Try Again</button>
+        <button class="btn btn-gold"    id="btn-tt-save">🎯 Save Score</button>
+        <button class="btn btn-secondary hidden" id="btn-tt-download-result">⬇ Download Recording</button>
+        <a href="/" class="btn btn-secondary">🏠 Home</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/tt.js') }}"></script>
+{% endblock %}
