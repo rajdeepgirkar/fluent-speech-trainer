@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% set active_page = "paragraph" %}
+{% block title %}Paragraph Reading — SFT{% endblock %}
+
+{% block content %}
+<div class="activity-page" id="para-page">
+
+  <!-- ── SETUP SECTION ─────────────────────────────── -->
+  <section class="activity-section" id="para-setup">
+    <div class="page-header">
+      <div class="page-header-icon">📖</div>
+      <div>
+        <h1 class="page-title">Paragraph Reading</h1>
+        <p class="page-subtitle">Read full paragraphs with WPM pacing and real-time word feedback</p>
+      </div>
+    </div>
+
+    <!-- Difficulty + Speed row -->
+    <div class="setup-row">
+      <div class="setup-col">
+        <div class="setup-section-label">Difficulty</div>
+        <div class="option-group">
+          <button class="option-pill para-diff-btn" data-diff="easy">🟢 Easy</button>
+          <button class="option-pill para-diff-btn selected" data-diff="medium">🟡 Medium</button>
+          <button class="option-pill para-diff-btn" data-diff="hard">🔴 Hard</button>
+        </div>
+      </div>
+      <div class="setup-col">
+        <div class="setup-section-label">Reading Speed</div>
+        <div class="option-group">
+          <button class="option-pill para-speed-btn" data-speed="slow">🐢 Slow (50 WPM)</button>
+          <button class="option-pill para-speed-btn selected" data-speed="medium">🚶 Medium (100 WPM)</button>
+          <button class="option-pill para-speed-btn" data-speed="fast">🚀 Fast (150 WPM)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Text — split layout -->
+    <div class="custom-text-header">
+      <div class="setup-section-label" style="margin-bottom:0">Custom Text <span class="optional-badge">Optional</span></div>
+      <p class="custom-text-note">Use your own text instead of the built-in paragraphs. Upload a file on the left, or type directly on the right.</p>
+    </div>
+
+    <div class="custom-text-split">
+
+      <!-- LEFT: File Upload -->
+      <div class="custom-text-panel upload-panel">
+        <div class="panel-label">📄 Upload a .txt File</div>
+
+        <div class="upload-zone" id="para-upload-zone">
+          <input type="file" accept=".txt" id="para-upload-input" style="position:absolute;inset:0;opacity:0;cursor:pointer;"/>
+          <div class="upload-icon">📂</div>
+          <div class="upload-text">
+            <strong>Click or drag & drop</strong><br>
+            <span>.txt files only</span>
+          </div>
+        </div>
+
+        <!-- File loaded state -->
+        <div class="file-loaded-card hidden" id="file-loaded-card">
+          <div class="file-info">
+            <span class="file-icon">📄</span>
+            <div>
+              <div class="file-name" id="file-name-display">—</div>
+              <div class="file-meta" id="file-meta-display">— words</div>
+            </div>
+          </div>
+          <div class="file-actions">
+            <button class="btn btn-sm" id="btn-toggle-file" title="Activate/Deactivate">✓ Active</button>
+            <button class="btn btn-sm btn-danger" id="btn-remove-file" title="Remove file">✕ Remove</button>
+          </div>
+        </div>
+
+        <div class="upload-note">
+          <strong>Note:</strong> Standalone numbers in uploaded files are automatically removed
+          to ensure accurate speech recognition matching.
+        </div>
+      </div>
+
+      <!-- RIGHT: Type Text -->
+      <div class="custom-text-panel type-panel">
+        <div class="panel-label">⌨️ Type or Paste Text</div>
+        <textarea
+          class="type-textarea"
+          id="para-type-input"
+          placeholder="Type or paste the text you want to practise reading aloud…&#10;&#10;Numbers will be handled automatically. Just focus on content."
+          rows="8"
+        ></textarea>
+        <div class="type-footer">
+          <span class="type-count" id="type-word-count">0 words</span>
+          <button class="btn btn-secondary btn-sm" id="btn-clear-typed">Clear</button>
+          <button class="btn btn-primary btn-sm" id="btn-use-typed">✓ Use This Text</button>
+        </div>
+        <div class="type-status hidden" id="typed-status">
+          <span class="tag tag-mint">✓ Custom typed text active</span>
+          <button class="btn btn-secondary btn-sm" id="btn-deactivate-typed">Deactivate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active text indicator -->
+    <div class="active-text-banner hidden" id="active-text-banner">
+      <div class="active-text-icon">✓</div>
+      <div class="active-text-info">
+        <strong id="active-text-label">Custom text active</strong>
+        <span id="active-text-words"></span>
+      </div>
+      <button class="btn btn-secondary btn-sm" id="btn-clear-custom">Use Built-in Paragraph</button>
+    </div>
+
+    <button class="btn btn-primary btn-lg btn-full" id="btn-start-para" style="margin-top:24px">
+      📖 Start Reading
+    </button>
+  </section>
+
+  <!-- ── SESSION SECTION ────────────────────────────── -->
+  <section class="activity-section hidden" id="para-session">
+
+    <!-- Top bar -->
+    <div class="session-topbar">
+      <div class="session-progress-wrap">
+        <div class="session-progress-label">
+          <span id="para-progress-label">0 / 0 words</span>
+          <span id="para-speed-label">Medium · 100 WPM</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="para-progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="session-stats">
+        <div class="stat-chip" id="para-timer-chip">⏱ 0:00</div>
+        <div class="stat-chip active" id="para-wpm-chip">— WPM</div>
+        <button class="btn btn-secondary btn-sm" id="btn-exit-para">✕ Exit</button>
+      </div>
+    </div>
+
+    <!-- Live speed controls -->
+    <div class="pacer-controls">
+      <span class="pacer-label">Pace:</span>
+      <button class="option-pill pacer-btn" data-speed="slow">🐢 50 WPM</button>
+      <button class="option-pill pacer-btn selected" data-speed="medium">🚶 100 WPM</button>
+      <button class="option-pill pacer-btn" data-speed="fast">🚀 150 WPM</button>
+      <span class="pacer-legend">
+        💙 pacer &nbsp; 🟡 current &nbsp; 🟢 correct &nbsp; 🔴 incorrect
+      </span>
+    </div>
+
+    <!-- Text card (scrollable) -->
+    <div class="text-display-card scrollable-text-card">
+      <div class="text-meta">
+        <div class="text-meta-left">
+          <span class="text-badge para-badge">📖 Paragraph</span>
+          <span id="para-title-display" style="font-size:13px;color:var(--text-muted)"></span>
+        </div>
+      </div>
+      <div class="reading-text" id="para-reading-text">Loading…</div>
+    </div>
+
+    <!-- Score bar -->
+    <div class="word-score-bar">
+      <div class="word-score-item"><span class="dot dot-correct"></span>Correct: <strong id="para-correct-count">0</strong></div>
+      <div class="word-score-item"><span class="dot dot-incorrect"></span>Incorrect: <strong id="para-incorrect-count">0</strong></div>
+    </div>
+
+    <!-- Transcript -->
+    <div class="transcript-display" id="para-transcript">Enable microphone and start reading the paragraph aloud…</div>
+
+    <!-- Controls -->
+    <div class="controls-area">
+      <div class="controls-left">
+        <button class="mic-btn" id="mic-btn-para" title="Enable microphone">
+          <span class="mic-icon">🎤</span>
+        </button>
+        <div class="rec-controls">
+          <div class="rec-indicator" id="rec-indicator-para">
+            <div class="rec-dot"></div>
+            <span class="rec-label">OFF</span>
+          </div>
+          <button class="btn btn-secondary btn-sm hidden" id="btn-download-para">⬇ Download</button>
+          <button class="btn btn-secondary btn-sm hidden" id="btn-playback-para">▶ Play Back</button>
+          <audio id="audio-playback-para" style="display:none"></audio>
+        </div>
+      </div>
+      <div class="controls-right">
+        <button class="btn btn-primary" id="btn-end-para-session">✓ Finish &amp; Score</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── RESULTS SECTION ────────────────────────────── -->
+  <section class="activity-section hidden" id="para-results">
+    <div class="results-container">
+      <div id="para-trophy" class="results-trophy">🏆</div>
+      <div id="para-result-title" class="results-title">Session Complete!</div>
+      <div id="para-result-subtitle" class="results-subtitle"></div>
+
+      <div class="results-score-ring">
+        <svg width="180" height="180" viewBox="0 0 180 180">
+          <circle class="score-ring-bg" cx="90" cy="90" r="80"/>
+          <circle class="score-ring-fill" id="para-score-ring" cx="90" cy="90" r="80"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-ring-number" id="para-score-number">—%</div>
+          <div class="score-ring-label">Accuracy</div>
+        </div>
+      </div>
+
+      <div class="results-metrics">
+        <div class="metric-card">
+          <div class="metric-value text-mint" id="para-res-accuracy">—%</div>
+          <div class="metric-label">Accuracy</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="para-res-wpm">—</div>
+          <div class="metric-label">Words/Min</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="para-res-feedback">—</div>
+          <div class="metric-label">Speed Rating</div>
+        </div>
+      </div>
+
+      <div class="feedback-card">
+        <div class="feedback-heading">💬 Coach Feedback</div>
+        <div class="feedback-text" id="para-feedback-text">—</div>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn btn-primary" id="btn-para-retry">🔁 Try Again</button>
+        <button class="btn btn-gold"    id="btn-para-save">🎯 Save Score</button>
+        <button class="btn btn-secondary hidden" id="btn-para-download-result">⬇ Download Recording</button>
+        <a href="/" class="btn btn-secondary">🏠 Home</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/para.js') }}"></script>
+{% endblock %}
