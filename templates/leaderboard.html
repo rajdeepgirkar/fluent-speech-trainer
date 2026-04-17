@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% set active_page = "leaderboard" %}
+{% block title %}Leaderboard — SFT{% endblock %}
+
+{% block content %}
+<div class="standard-page">
+  <div class="page-header">
+    <div class="page-header-icon">🏆</div>
+    <div>
+      <h1 class="page-title">Leaderboard</h1>
+      <p class="page-subtitle">Top performers ranked by accuracy</p>
+    </div>
+    <div style="margin-left:auto">
+      <span id="lb-total" class="tag tag-mint" style="font-size:13px;padding:6px 14px">Loading…</span>
+    </div>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="lb-filters">
+    <button class="option-pill lb-filter-btn selected" data-filter="all">All Modules</button>
+    <button class="option-pill lb-filter-btn" data-filter="tongue_twister">👅 Tongue Twister</button>
+    <button class="option-pill lb-filter-btn" data-filter="paragraph">📖 Paragraph</button>
+  </div>
+
+  <!-- Table -->
+  <div class="lb-table">
+    <div class="lb-row lb-header">
+      <div>Rank</div>
+      <div>Player</div>
+      <div>Module</div>
+      <div>Accuracy</div>
+      <div>WPM</div>
+      <div>Speed</div>
+      <div>Date</div>
+    </div>
+    <div id="lb-body">
+      <div class="empty-state"><div class="empty-icon">⏳</div><p>Loading scores…</p></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  let allScores = [];
+  let currentFilter = 'all';
+
+  async function loadLB() {
+    const res  = await fetch('/api/scores');
+    const data = await res.json();
+    allScores  = data.leaderboard || [];
+    document.getElementById('lb-total').textContent = `${data.total} scores`;
+    renderLB();
+  }
+
+  function renderLB() {
+    const filtered = currentFilter === 'all'
+      ? allScores
+      : allScores.filter(s => s.module === currentFilter);
+
+    const body = document.getElementById('lb-body');
+    if (!filtered.length) {
+      body.innerHTML = '<div class="empty-state"><div class="empty-icon">🎤</div><p>No scores yet for this filter.</p></div>';
+      return;
+    }
+
+    const medals = ['🥇','🥈','🥉'];
+    const mClasses = ['gold','silver','bronze'];
+    body.innerHTML = filtered.map((entry, i) => {
+      const rank = i < 3
+        ? `<span class="lb-rank ${mClasses[i]}">${medals[i]}</span>`
+        : `<span class="lb-rank">#${i+1}</span>`;
+      const mod = entry.module === 'tongue_twister' ? '👅 Twister' : '📖 Paragraph';
+      const fb  = entry.speed_feedback || '—';
+      const fbC = fb === 'Optimal' ? 'optimal' : fb === 'Too Fast' ? 'too-fast' : 'too-slow';
+      const date = entry.timestamp ? entry.timestamp.slice(0,10) : '—';
+      return `
+        <div class="lb-row">
+          ${rank}
+          <div class="lb-user">${esc(entry.username)}</div>
+          <div class="lb-module">${mod}</div>
+          <div class="lb-score">${entry.accuracy}%</div>
+          <div class="lb-wpm">${entry.wpm > 0 ? entry.wpm + ' WPM' : '—'}</div>
+          <div><span class="lb-feedback ${fbC}">${fb}</span></div>
+          <div class="lb-date">${date}</div>
+        </div>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.lb-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentFilter = btn.dataset.filter;
+      document.querySelectorAll('.lb-filter-btn').forEach(b => b.classList.toggle('selected', b === btn));
+      renderLB();
+    });
+  });
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  loadLB();
+});
+</script>
+{% endblock %}
