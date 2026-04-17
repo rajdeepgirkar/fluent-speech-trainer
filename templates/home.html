@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block title %}Speech Fluency Trainer — Home{% endblock %}
+
+{% block content %}
+<div class="home-page">
+
+  <!-- Hero -->
+  <section class="home-hero">
+    <div class="hero-inner">
+      <div class="home-badge">🎙 Speech Training</div>
+      <h1 class="home-title">Master the Art of<br>Fluent Speaking</h1>
+      <p class="home-subtitle">
+        Real-time speech recognition, word-by-word feedback, and performance
+        scoring — all running in your browser. No downloads needed.
+      </p>
+      <div class="hero-cta">
+        <a href="/tongue-twister" class="btn btn-primary btn-lg">👅 Start Tongue Twisters</a>
+        <a href="/paragraph"      class="btn btn-secondary btn-lg">📖 Paragraph Reading</a>
+      </div>
+    </div>
+    <!-- Decorative waveform -->
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 200 60" preserveAspectRatio="none">
+        <polyline points="0,30 10,15 20,45 30,10 40,40 50,20 60,35 70,8 80,42 90,18 100,30 110,12 120,48 130,22 140,38 150,14 160,44 170,26 180,36 190,10 200,30" fill="none" stroke="var(--mint)" stroke-width="2" opacity="0.4"/>
+        <polyline points="0,30 10,20 20,40 30,15 40,45 50,25 60,38 70,12 80,46 90,22 100,33 110,16 120,44 130,26 140,36 150,18 160,42 170,28 180,34 190,14 200,30" fill="none" stroke="var(--blue-accent)" stroke-width="1.5" opacity="0.25"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-value">30+</div>
+        <div class="stat-label">Tongue Twisters</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Paragraphs</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Speed Levels</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">Live</div>
+        <div class="stat-label">Speech Recognition</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module cards -->
+  <section class="home-modules-section">
+    <div class="section-header">
+      <h2 class="section-title">Choose Your Activity</h2>
+      <p class="section-sub">Two powerful modules to sharpen your speaking skills</p>
+    </div>
+    <div class="home-modules">
+
+      <a href="/tongue-twister" class="module-card tt-card">
+        <div class="module-icon">👅</div>
+        <div class="module-title">Tongue Twister Practice</div>
+        <p class="module-desc">
+          Train clarity and articulation with 5 curated tongue twisters per session.
+          Three categories: communication, technical, and tricky fun.
+        </p>
+        <div class="module-tags">
+          <span class="tag tag-mint">5 per Session</span>
+          <span class="tag tag-blue">Live Highlighting</span>
+          <span class="tag tag-mint">Score + Recording</span>
+        </div>
+        <div class="module-cta">Start Practicing →</div>
+      </a>
+
+      <a href="/paragraph" class="module-card para-card">
+        <div class="module-icon">📖</div>
+        <div class="module-title">Paragraph Reading</div>
+        <p class="module-desc">
+          Read full paragraphs with WPM pacing. Three difficulty levels plus
+          support for custom text files or typed input.
+        </p>
+        <div class="module-tags">
+          <span class="tag tag-gold">Easy / Medium / Hard</span>
+          <span class="tag tag-coral">WPM Pacer</span>
+          <span class="tag tag-gold">Custom Text</span>
+        </div>
+        <div class="module-cta">Start Reading →</div>
+      </a>
+
+      <a href="/daily-challenge" class="module-card challenge-card">
+        <div class="module-icon">⚡</div>
+        <div class="module-title">Daily Challenge</div>
+        <p class="module-desc">
+          A fresh challenge every day — same for all users, seeded by date.
+          One twister + one paragraph to keep you consistent.
+        </p>
+        <div class="module-tags">
+          <span class="tag tag-gold">Refreshes Daily</span>
+          <span class="tag tag-coral">Streak Tracking</span>
+        </div>
+        <div class="module-cta">Today's Challenge →</div>
+      </a>
+
+      <a href="/dashboard" class="module-card dash-card">
+        <div class="module-icon">📊</div>
+        <div class="module-title">My Dashboard</div>
+        <p class="module-desc">
+          Track your progress over time. View accuracy trends, WPM history,
+          streaks, module breakdown, and global rank.
+        </p>
+        <div class="module-tags">
+          <span class="tag tag-blue">Progress Tracking</span>
+          <span class="tag tag-mint">Global Rank</span>
+        </div>
+        <div class="module-cta">View Dashboard →</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <div class="section-header">
+      <h2 class="section-title">How It Works</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Choose an Activity</div>
+        <p class="step-desc">Pick tongue twisters or paragraph reading. Set your category, difficulty, and speed.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">Enable Microphone</div>
+        <p class="step-desc">Allow browser mic access. Your audio is processed locally — nothing leaves your device.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">Read Aloud</div>
+        <p class="step-desc">Words highlight green (correct) or red (incorrect) in real time as you speak.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">Get Your Score</div>
+        <p class="step-desc">See your accuracy %, WPM, and speed feedback. Download your recording and save to the leaderboard.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
