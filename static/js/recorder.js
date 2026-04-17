@@ -1,7 +1,7 @@
-/**
- * Speech Fluency Trainer — recorder.js
- * Audio capture via MediaRecorder API, playback, and download.
- */
+/*
+  * Speech Fluency Trainer — recorder.js
+  * Audio capture via MediaRecorder API, playback, and download.
+*/
 
 window.SFT = window.SFT || {};
 
