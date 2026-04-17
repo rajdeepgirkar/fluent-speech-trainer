@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% set active_page = "daily-challenge" %}
+{% block title %}Daily Challenge — SFT{% endblock %}
+
+{% block content %}
+<div class="standard-page">
+  <div class="page-header">
+    <div class="page-header-icon">⚡</div>
+    <div>
+      <h1 class="page-title">Daily Challenge</h1>
+      <p class="page-subtitle" id="challenge-date-display">Loading today's challenge…</p>
+    </div>
+    <div style="margin-left:auto">
+      <div class="streak-chip" id="streak-display" style="display:none">
+        🔥 <span id="streak-count">0</span> day streak
+      </div>
+    </div>
+  </div>
+
+  <div id="challenge-loading" class="empty-state">
+    <div class="empty-icon">⏳</div><p>Fetching today's challenge…</p>
+  </div>
+
+  <div id="challenge-content" style="display:none">
+
+    <!-- Two challenge cards -->
+    <div class="challenge-cards">
+
+      <!-- Tongue Twister Card -->
+      <div class="challenge-item-card" id="tt-challenge-card">
+        <div class="challenge-item-header">
+          <span class="challenge-num">01</span>
+          <div>
+            <div class="challenge-item-title">👅 Tongue Twister</div>
+            <div class="challenge-item-sub">Read it clearly — speed is secondary to accuracy</div>
+          </div>
+          <div class="challenge-status" id="tt-challenge-status">
+            <span class="tag tag-blue">Pending</span>
+          </div>
+        </div>
+        <div class="challenge-text-box" id="tt-challenge-text">—</div>
+        <div class="challenge-actions">
+          <button class="btn btn-primary" id="btn-start-tt-challenge">🎤 Practice This</button>
+        </div>
+      </div>
+
+      <!-- Paragraph Card -->
+      <div class="challenge-item-card" id="para-challenge-card">
+        <div class="challenge-item-header">
+          <span class="challenge-num">02</span>
+          <div>
+            <div class="challenge-item-title">📖 Paragraph Reading</div>
+            <div class="challenge-item-sub">Read with fluency and maintain your pace</div>
+          </div>
+          <div class="challenge-status" id="para-challenge-status">
+            <span class="tag tag-blue">Pending</span>
+          </div>
+        </div>
+        <div class="challenge-text-box" id="para-challenge-text">—</div>
+        <div class="challenge-actions">
+          <button class="btn btn-primary" id="btn-start-para-challenge">🎤 Practice This</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Inline practice session (shown when user clicks Practice This) -->
+    <div class="inline-practice hidden" id="inline-practice">
+      <div class="session-topbar">
+        <div class="session-progress-wrap">
+          <div class="session-progress-label">
+            <span id="dc-session-label">Daily Challenge</span>
+            <span id="dc-speed-label">Medium · 100 WPM</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="dc-progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="session-stats">
+          <div class="stat-chip" id="dc-timer-chip">⏱ 0:00</div>
+          <div class="stat-chip active" id="dc-wpm-chip">— WPM</div>
+          <button class="btn btn-secondary btn-sm" id="btn-dc-exit">✕ Exit</button>
+        </div>
+      </div>
+
+      <div class="text-display-card">
+        <div class="text-meta">
+          <span class="text-badge tt-badge" id="dc-badge">⚡ Daily</span>
+          <span id="dc-type-label" style="font-size:13px;color:var(--text-muted);margin-left:8px"></span>
+        </div>
+        <div class="reading-text" id="dc-reading-text">—</div>
+      </div>
+
+      <div class="word-score-bar">
+        <div class="word-score-item"><span class="dot dot-correct"></span>Correct: <strong id="dc-correct-count">0</strong></div>
+        <div class="word-score-item"><span class="dot dot-incorrect"></span>Incorrect: <strong id="dc-incorrect-count">0</strong></div>
+      </div>
+
+      <div class="transcript-display" id="dc-transcript">Enable microphone and start reading…</div>
+
+      <div class="controls-area">
+        <div class="controls-left">
+          <button class="mic-btn" id="mic-btn-dc"><span class="mic-icon">🎤</span></button>
+          <div class="rec-controls">
+            <div class="rec-indicator" id="rec-indicator-dc">
+              <div class="rec-dot"></div><span class="rec-label">OFF</span>
+            </div>
+            <button class="btn btn-secondary btn-sm hidden" id="btn-download-dc">⬇ Download</button>
+            <audio id="audio-playback-dc" style="display:none"></audio>
+          </div>
+        </div>
+        <div class="controls-right">
+          <button class="btn btn-primary" id="btn-dc-finish">✓ Finish &amp; Score</button>
+        </div>
+      </div>
+
+      <!-- Inline results -->
+      <div class="inline-results hidden" id="dc-inline-results">
+        <div class="results-metrics" style="max-width:500px;margin:24px auto">
+          <div class="metric-card">
+            <div class="metric-value text-mint" id="dc-res-accuracy">—%</div>
+            <div class="metric-label">Accuracy</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="dc-res-wpm">—</div>
+            <div class="metric-label">WPM</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" id="dc-res-feedback">—</div>
+            <div class="metric-label">Speed</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-gold"      id="btn-dc-save">🎯 Save Score</button>
+          <button class="btn btn-secondary" id="btn-dc-try-again">🔁 Try Again</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/daily.js') }}"></script>
+{% endblock %}
