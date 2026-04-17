@@ -1,67 +1,89 @@
 # 🎤 Speech Fluency Trainer
 
-> 🚧 **Project Status: Under Development**
+> 🚧 **Project Status: Under Active Development**
 >
-> ⚠️ Some features are not fully implemented yet:
+> ✅ Core features are now functional:
 >
-> * 🏆 Leaderboard and 👤 User Dashboard are **in progress**
-> * 🔊 Play Audio and 💾 Save Scores may **not work as intended**
+> * 🏆 Leaderboard implemented
+> * 👤 User Dashboard available
+> * 🔊 Audio Playback working
+> * 💾 Score Saving functional
 >
-> 📝 This is currently a **single-page static web application (SPA)** with a Flask backend for APIs.
+> 🌐 Deployment:
+>
+> * ⏳ GitHub Pages deployment — **Pending**
+>
+> 📝 This is now a **multi-page web application** built using **Flask (backend APIs)** and dynamic frontend templates.
 
 ---
 
 ## 💡 Overview
 
-A web application designed to improve communication and speaking skills through interactive activities like tongue twisters and paragraph reading — powered by real-time speech recognition and instant feedback.
+A web application designed to improve communication and speaking skills through interactive activities like tongue twisters and paragraph reading — powered by real-time speech recognition, instant feedback, and performance tracking.
 
 ---
 
 ## ✨ Features
 
-<p align = "center">
+<p align="center">
 
 ![Speech Recognition](https://img.shields.io/badge/Speech-Real--Time-blue?style=for-the-badge)
 ![Accuracy](https://img.shields.io/badge/Accuracy-Tracking-green?style=for-the-badge)
 ![WPM](https://img.shields.io/badge/WPM-Pacer-orange?style=for-the-badge)
 ![Recording](https://img.shields.io/badge/Audio-Recording-red?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Development-yellow?style=for-the-badge)
+![Leaderboard](https://img.shields.io/badge/Leaderboard-Live-purple?style=for-the-badge)
 
 </p>
 
-| Feature                         | Details                                   |
-| ------------------------------- | ----------------------------------------- |
-| 👅 Tongue Twisters              | 5-twister sessions across 3 categories    |
-| 📖 Paragraph Reading            | Easy / Medium / Hard + custom text upload |
-| 🎤 Real-time Speech Recognition | Web Speech API, word-by-word comparison   |
-| 🟢🔴 Live Highlighting          | Green = correct, Red = incorrect          |
-| ⏱ WPM Pacer                     | 80 / 130 / 200 WPM visual guide           |
-| 🎯 Accuracy Score               | Per-session percentage                    |
-| ⚡ Speed Feedback                | Too Slow / Optimal / Too Fast             |
-| 🎙️ Audio Recording               | MediaRecorder API (.webm download)        |
-| 🏆 Leaderboard                  | ⚠️ Under development                      |
-| ⭐ Daily Challenge               | Same for all users (date-based)           |
+| Feature                         | Details                                     |
+| ------------------------------- | ------------------------------------------- |
+| 👅 Tongue Twisters              | 5-twister sessions across 3 categories      |
+| 📖 Paragraph Reading            | Easy / Medium / Hard + custom text upload   |
+| 🎤 Real-time Speech Recognition | Web Speech API with word-by-word comparison |
+| 🟢🔴 Live Highlighting          | Green = correct, Red = incorrect            |
+| ⏱ WPM Pacer                     | 50 / 100 / 150 WPM visual guide             |
+| 🎯 Accuracy Score               | Real-time percentage calculation            |
+| ⚡ Speed Feedback                | Too Slow / Optimal / Too Fast               |
+| 🎙️ Audio Recording             | Record, download, and playback audio        |
+| 🏆 Leaderboard                  | Top 20 users based on accuracy              |
+| 👤 User Dashboard               | View personal performance & history         |
+| ⭐ Daily Challenge               | Same challenge for all users (date-based)   |
+| 💾 Score Saving                 | Persistent storage using JSON               |
 
 ---
 
 ## 🗂 Project Structure
 
 ```
-speech-fluency-trainer/
+fluent-speech-trainer/
 ├── app.py
-├── requirements.txt
-├── README.md
 ├── data/
-│   ├── tongue_twisters.json
 │   ├── paragraphs.json
-│   └── scores.json
-├── uploads/
+│   ├── scores.json
+│   └── tongue_twisters.json
+├── README.md
 ├── recordings/
+├── requirements.txt
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       ├── common.js
+│       ├── daily.js
+│       ├── para.js
+│       ├── recorder.js
+│       ├── speech.js
+│       └── tt.js
 ├── templates/
-│   └── index.html   # Single Page App
-└── static/
-    ├── css/
-    └── js/
+│   ├── base.html
+│   ├── daily_challenge.html
+│   ├── dashboard.html
+│   ├── home.html
+│   ├── leaderboard.html
+│   ├── paragraph.html
+│   └── tongue_twister.html
+└── uploads/
+    └── sample.txt
 ```
 
 ---
@@ -71,9 +93,11 @@ speech-fluency-trainer/
 ### 🔹 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/speech-fluency-trainer.git
-cd speech-fluency-trainer
+git clone https://github.com/your-username/fluent-speech-trainer.git
+cd fluent-speech-trainer
 ```
+
+---
 
 ### 🔹 2. Install Dependencies (pip)
 
@@ -102,9 +126,9 @@ python app.py
 
 ### 🔹 4. Open in Browser
 
-👉 **<http://localhost:5000>**
+👉 **http://localhost:5000**
 
-> ⚠️ Use **Google Chrome / Microsoft Edge** (Web Speech API required)
+> ⚠️ Use **Google Chrome / Microsoft Edge** (required for Web Speech API)
 
 ---
 
@@ -117,6 +141,8 @@ python app.py
 * Word-by-word comparison
 * Fuzzy matching support
 
+---
+
 ### 🎨 Live Feedback
 
 ```diff
@@ -124,34 +150,53 @@ python app.py
 - Incorrect words → Red
 ```
 
+---
+
 ### ⏱ Performance Tracking
 
 * Accuracy (%) calculation
 * Words Per Minute (WPM)
-* Speed classification
+* Speed classification (Slow / Optimal / Fast)
 
 ---
 
-## 🎙 Audio Features (Experimental)
+## 🎙 Audio Features
 
 * Record voice using MediaRecorder API
-* Download recording as `.webm`
-* ⚠️ Playback & server upload may be unstable
+* Download recordings as `.webm`
+* Playback directly in browser
+* Optional server-side storage
+
+---
+
+## 🏆 Leaderboard & Dashboard
+
+* 🥇 Top 20 users ranked by accuracy
+* 👤 Individual user dashboard
+* 📊 Track past performance
+* 💾 Persistent score storage (JSON-based)
 
 ---
 
 ## 🔌 API Endpoints
 
-| Method | Endpoint               | Description          |
-| ------ | ---------------------- | -------------------- |
-| GET    | `/`                    | Serve SPA            |
-| GET    | `/api/tongue-twisters` | Fetch twisters       |
-| GET    | `/api/paragraphs`      | Fetch paragraphs     |
-| GET    | `/api/daily-challenge` | Daily challenge      |
-| POST   | `/api/upload-text`     | Upload text          |
-| GET    | `/api/scores`          | ⚠️ Leaderboard (WIP) |
-| POST   | `/api/audio`           | Save audio           |
-| GET    | `/api/health`          | Health check         |
+| Method | Endpoint               | Description            |
+| ------ | ---------------------- | ---------------------- |
+| GET    | `/`                    | Home page              |
+| GET    | `/tongue-twister`      | Tongue twister page    |
+| GET    | `/paragraph`           | Paragraph reading page |
+| GET    | `/leaderboard`         | Leaderboard UI         |
+| GET    | `/dashboard`           | User dashboard         |
+| GET    | `/daily-challenge`     | Daily challenge page   |
+| GET    | `/api/tongue-twisters` | Fetch twisters         |
+| GET    | `/api/paragraphs`      | Fetch paragraphs       |
+| GET    | `/api/daily-challenge` | Daily challenge data   |
+| POST   | `/api/upload-text`     | Upload text            |
+| GET    | `/api/scores`          | Get leaderboard        |
+| POST   | `/api/scores`          | Save score             |
+| GET    | `/api/audio`           | Fetch audio            |
+| POST   | `/api/audio`           | Save audio             |
+| GET    | `/api/health`          | Health check           |
 
 ---
 
@@ -164,31 +209,23 @@ ALLOWED_TEXT  = {'txt'}
 ALLOWED_AUDIO = {'wav', 'webm', 'ogg', 'mp3'}
 ```
 
-### JavaScript (`app.js`)
+---
+
+### JavaScript
 
 ```javascript
-const WPM_TARGETS = { slow: 80, medium: 130, fast: 200 };
+const WPM_TARGETS = { slow: 50, medium: 100, fast: 150 };
 const TT_SESSION_SIZE = 5;
 ```
 
 ---
 
-## 🚧 Known Limitations
-
-* Leaderboard not fully functional
-* User tracking/dashboard not implemented
-* Audio playback may fail in some browsers
-* Score saving may not persist correctly
-
----
-
 ## 🔮 Future Scope
 
-* AI pronunciation feedback
-* User authentication & dashboard
-* Progress tracking
-* Multiplayer / competitive mode
-* Mobile optimization
+* AI pronunciation feedback (Whisper / Wav2Vec)
+* Authentication system
+* GitHub Pages / Vercel Deployment
+* Mobile responsiveness improvements
 
 ---
 
