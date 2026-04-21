@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Speech Fluency Trainer{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Syne:wght@700;800&family=Fira+Mono:wght@400;500&display=swap"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar">
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-icon">🎤</div>
+    <span class="nav-logo-text">Fluency<span>Trainer</span></span>
+  </a>
+
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">☰</button>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/"                class="nav-link {% if active_page=='home'            %}active{% endif %}">🏠 Home</a></li>
+    <li><a href="/tongue-twister"  class="nav-link {% if active_page=='tongue-twister'  %}active{% endif %}">👅 Tongue Twister</a></li>
+    <li><a href="/paragraph"       class="nav-link {% if active_page=='paragraph'       %}active{% endif %}">📖 Paragraph</a></li>
+    <li><a href="/daily-challenge" class="nav-link {% if active_page=='daily-challenge' %}active{% endif %}">⚡ Daily Challenge</a></li>
+    <li><a href="/leaderboard"     class="nav-link {% if active_page=='leaderboard'     %}active{% endif %}">🏆 Leaderboard</a></li>
+    <li><a href="/dashboard"       class="nav-link {% if active_page=='dashboard'       %}active{% endif %}">📊 Dashboard</a></li>
+  </ul>
+
+  <button class="username-chip" id="username-chip">
+    <span class="dot"></span>
+    <span id="username-label">Anonymous</span>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE CONTENT
+══════════════════════════════════════════ -->
+<main class="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">🎤 FluencyTrainer</span>
+      <span class="footer-tagline">Master the art of fluent speaking</span>
+    </div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/tongue-twister">Tongue Twister</a>
+      <a href="/paragraph">Paragraph</a>
+      <a href="/daily-challenge">Daily Challenge</a>
+      <a href="/leaderboard">Leaderboard</a>
+      <a href="/dashboard">Dashboard</a>
+    </div>
+    <div class="footer-note">
+      Uses Web Speech API · Best in Chrome / Edge
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     USERNAME MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="username-modal">
+  <div class="modal">
+    <div class="modal-title">👤 Set Your Name</div>
+    <div class="modal-body">Your name appears on the leaderboard and dashboard when you save scores.</div>
+    <input class="modal-input" id="username-input" type="text" placeholder="Enter your name or alias" maxlength="30"/>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" id="btn-cancel-username">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="btn-save-username">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- Shared Scripts -->
+<script src="{{ url_for('static', filename='js/speech.js') }}"></script>
+<script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
