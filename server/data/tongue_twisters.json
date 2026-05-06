@@ -1,0 +1,38 @@
+{
+  "communication": [
+    {"id": "c1", "text": "She sells speeches by the seashore, so surely some speeches she sold are seashore speeches.", "difficulty": "hard"},
+    {"id": "c2", "text": "Communicating clearly creates confident and competent conversationalists.", "difficulty": "medium"},
+    {"id": "c3", "text": "Peter's presentation produced particularly powerful points for professional progress.", "difficulty": "hard"},
+    {"id": "c4", "text": "Speak smoothly, speak swiftly, speak surely to succeed in every speech.", "difficulty": "medium"},
+    {"id": "c5", "text": "Proper pronunciation promotes professional performance perfectly every single day.", "difficulty": "medium"},
+    {"id": "c6", "text": "The manager manages many meaningful meetings masterfully every morning.", "difficulty": "medium"},
+    {"id": "c7", "text": "A good communicator conveys concepts concisely, convincingly, and clearly.", "difficulty": "easy"},
+    {"id": "c8", "text": "Presenters prepare precisely planned presentations to prevent poor performance.", "difficulty": "hard"},
+    {"id": "c9", "text": "Vocal voices vary vastly, validating varied verbal versatility.", "difficulty": "medium"},
+    {"id": "c10", "text": "Fluent speakers find focus, forming flawless flowing phrases freely.", "difficulty": "hard"}
+  ],
+  "technical": [
+    {"id": "t1", "text": "Six slick slim slippery scripts slid slowly sideways.", "difficulty": "medium"},
+    {"id": "t2", "text": "The algorithm analytically analyzes all available algorithmic alternatives.", "difficulty": "hard"},
+    {"id": "t3", "text": "Python programmers prefer precise, practical, powerful programming practices.", "difficulty": "medium"},
+    {"id": "t4", "text": "Developers deploy dynamic databases during daytime debugging duties.", "difficulty": "medium"},
+    {"id": "t5", "text": "Server side scripts synchronize structured, stored, systematic solutions swiftly.", "difficulty": "hard"},
+    {"id": "t6", "text": "Computing complex calculations creates computational challenges constantly.", "difficulty": "medium"},
+    {"id": "t7", "text": "Debugging broken byte by byte builds before breakpoints become burdensome.", "difficulty": "hard"},
+    {"id": "t8", "text": "The tech team tested ten thousand technical tools to tune the terminal today.", "difficulty": "hard"},
+    {"id": "t9", "text": "Recursive runtime routines rarely run right without rigorous review.", "difficulty": "hard"},
+    {"id": "t10", "text": "Binary builds bring brilliant but brittle baseline behaviors.", "difficulty": "medium"}
+  ],
+  "tricky_fun": [
+    {"id": "f1", "text": "How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "difficulty": "medium"},
+    {"id": "f2", "text": "She sells seashells by the seashore and the shells she sells are surely seashells.", "difficulty": "hard"},
+    {"id": "f3", "text": "Red lorry yellow lorry red lorry yellow lorry red lorry yellow lorry.", "difficulty": "hard"},
+    {"id": "f4", "text": "Unique New York, unique New York, you know you need unique New York.", "difficulty": "medium"},
+    {"id": "f5", "text": "The thirty three thieves thought that they thrilled the throne throughout Thursday.", "difficulty": "hard"},
+    {"id": "f6", "text": "Fuzzy Wuzzy was a bear who had no hair so Fuzzy Wuzzy wasn't very fuzzy was he?", "difficulty": "medium"},
+    {"id": "f7", "text": "I saw Susie sitting in a shoe shine shop where she shines she sits and where she sits she shines.", "difficulty": "hard"},
+    {"id": "f8", "text": "A big black bug bit a big black bear and the big black bear bled blue black blood.", "difficulty": "hard"},
+    {"id": "f9", "text": "Whether the weather is fine or whether the weather is not, we weather the weather whatever the weather.", "difficulty": "hard"},
+    {"id": "f10", "text": "Peter Piper picked a peck of pickled peppers, a peck of pickled peppers Peter Piper picked.", "difficulty": "medium"}
+  ]
+}
