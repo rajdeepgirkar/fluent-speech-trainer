@@ -1,35 +1,65 @@
 # 🎤 Fluent Speech Trainer — MERN Stack
 
-A professional full-stack web application for improving communication skills through interactive speaking activities — featuring real-time speech recognition, word-by-word highlighting, audio recording, comprehensive performance analytics, and secure user authentication.
+A professional full-stack web application for improving communication skills through interactive speaking activities — featuring real-time speech recognition, word-by-word highlighting, audio recording, comprehensive performance analytics, activity management, and secure user authentication.
 
 ---
 
 ## 📁 Complete Folder Structure
 
 ```
-comm_v5/
+comm_v6/
 ├── client/                         # React Frontend (Vite)
 │   ├── public/                     # Static assets
 │   ├── src/
-│   │   ├── api/                    # Axios instance & API calls
-│   │   ├── components/             # Reusable React components (Navbar, Footer, etc.)
-│   │   ├── context/                # React Context (AuthContext)
-│   │   ├── hooks/                  # Custom hooks (useSpeechRecognition, useRecorder)
-│   │   ├── pages/                  # Route views (Home, Dashboard, TongueTwister, etc.)
-│   │   ├── utils/                  # Shared utilities (speechUtils for Levenshtein)
+│   │   ├── api/                    # Axios instance & API configuration
+│   │   │   └── axios.js            # Axios with JWT interceptor
+│   │   ├── components/             # Reusable React components
+│   │   │   ├── Navbar.jsx          # Navigation bar with responsive hamburger menu
+│   │   │   ├── ProtectedRoute.jsx  # Auth-gated route wrapper
+│   │   │   └── Toast.jsx           # Toast notification component
+│   │   ├── context/                # React Context
+│   │   │   └── AuthContext.jsx     # Authentication state management
+│   │   ├── hooks/                  # Custom React hooks
+│   │   │   ├── useRecorder.js      # MediaRecorder API wrapper for audio capture
+│   │   │   └── useSpeechRecognition.js  # Web Speech API wrapper with continuous mode
+│   │   ├── pages/                  # Route views
+│   │   │   ├── Home.jsx            # Landing page with feature showcase
+│   │   │   ├── Login.jsx           # User login form
+│   │   │   ├── Signup.jsx          # User registration form
+│   │   │   ├── Dashboard.jsx       # Personal analytics with activity management
+│   │   │   ├── Leaderboard.jsx     # Global rankings with color-coded accuracy
+│   │   │   ├── TongueTwister.jsx   # Tongue twister practice module
+│   │   │   └── Paragraph.jsx       # Paragraph reading practice module
+│   │   ├── utils/                  # Shared utilities
+│   │   │   └── speechUtils.js      # Levenshtein distance & number normalization
 │   │   ├── App.jsx                 # Main application router
 │   │   ├── main.jsx                # Entry point
-│   │   └── *.css                   # Stylesheets (index.css, activity.css, etc.)
+│   │   ├── index.css               # Global styles, design tokens & leaderboard styles
+│   │   ├── home.css                # Home page styles
+│   │   ├── activity.css            # Activity module styles
+│   │   ├── dashboard.css           # Dashboard & activity table styles
+│   │   └── App.css                 # App-level layout styles
+│   ├── index.html                  # HTML entry point
 │   ├── package.json                # Frontend dependencies
 │   └── vite.config.js              # Vite bundler configuration
 │
 ├── server/                         # Express.js Backend
-│   ├── config/                     # Database configuration (db.js)
-│   ├── data/                       # JSON seed data (twisters, paragraphs)
-│   ├── middleware/                 # Custom middleware (authMiddleware)
-│   ├── models/                     # Mongoose Schemas (User, Score)
-│   ├── routes/                     # Express API routers (auth, scores, content)
-│   ├── uploads/                    # User audio recordings
+│   ├── config/                     # Database configuration
+│   │   └── db.js                   # MongoDB connection setup
+│   ├── data/                       # JSON seed data
+│   │   ├── tongue_twisters.json    # Tongue twister content by category
+│   │   └── paragraphs.json         # Paragraph content by difficulty
+│   ├── middleware/                  # Custom middleware
+│   │   └── authMiddleware.js       # JWT verification & route protection
+│   ├── models/                     # Mongoose Schemas
+│   │   ├── User.js                 # User model with bcrypt password hashing
+│   │   └── Score.js                # Score model with accuracy, WPM, speed feedback
+│   ├── routes/                     # Express API routers
+│   │   ├── authRoutes.js           # Signup & login endpoints
+│   │   ├── speechRoutes.js         # Twisters & paragraphs content endpoints
+│   │   ├── scoreRoutes.js          # Score CRUD, dashboard analytics & leaderboard
+│   │   └── uploadRoutes.js         # File upload endpoint
+│   ├── uploads/                    # User audio recordings (auto-created)
 │   ├── server.js                   # Express application entry point
 │   └── package.json                # Backend dependencies
 │
@@ -40,20 +70,22 @@ comm_v5/
 
 ## ✨ Features Overview
 
-| Feature                          | Implementation                                              |
-| -------------------------------- | ----------------------------------------------------------- |
-| **Multi-page SPA**               | React Router DOM with protected routes                      |
-| **Authentication**               | Secure JWT-based login/signup with Bcrypt hashing           |
-| **Real-time Speech Recognition** | Web Speech API with continuous mode via custom React hook   |
-| **Number Normalization**         | Spoken digits ("3") → words ("three") for accurate matching |
-| **Word Highlighting**            | 🟢 Green = correct, 🔴 Red = incorrect, 🟡 Yellow = current |
-| **WPM Pacer**                    | Visual guide at adjustable speeds (Slow/Medium/Fast/Custom) |
-| **Audio Recording**              | MediaRecorder API via custom hook → downloadable `.webm`    |
-| **File Upload**                  | Upload `.txt` files to practice reading custom paragraphs   |
-| **Typed Text Input**             | Direct textarea input with live word count                  |
-| **Leaderboard**                  | Filterable by module, sorted by accuracy and WPM            |
-| **User Dashboard**               | KPIs, module breakdown, streak tracking, activity history   |
-| **Score Persistence**            | MongoDB Atlas storage linked to authenticated users         |
+| Feature                          | Implementation                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------------- |
+| **Multi-page SPA**               | React Router DOM with protected routes                                                      |
+| **Authentication**               | Secure JWT-based login/signup with Bcrypt hashing                                           |
+| **Real-time Speech Recognition** | Web Speech API with continuous mode via custom React hook                                   |
+| **Number Normalization**         | Spoken digits ("3") → words ("three") for accurate matching                                 |
+| **Word Highlighting**            | 🟢 Green = correct, 🔴 Red = incorrect, 🟡 Yellow = current                                 |
+| **WPM Pacer**                    | Visual guide at adjustable speeds (Slow/Medium/Fast/Custom)                                 |
+| **Audio Recording**              | MediaRecorder API via custom hook → downloadable `.webm`                                    |
+| **File Upload**                  | Upload `.txt` files to practice reading custom paragraphs                                   |
+| **Typed Text Input**             | Direct textarea input with live word count                                                  |
+| **Leaderboard**                  | Filterable by module, sorted by accuracy with color-coded scores                            |
+| **User Dashboard**               | KPIs, module breakdown, streak tracking, activity history                                   |
+| **Activity Management**          | Delete individual activities from dashboard with confirmation                               |
+| **Score Persistence**            | MongoDB Atlas storage linked to authenticated users                                         |
+| **Color-coded Accuracy**         | 🟢 ≥85% (mint), 🟡 ≥65% (gold), 🔴 <65% (coral) — consistent across Dashboard & Leaderboard |
 
 ---
 
@@ -73,9 +105,7 @@ Follow these steps to run the complete MERN application locally.
 
 ```env
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/fluent-speech?retryWrites=true&w=majority
-
 JWT_SECRET=your_super_secret_jwt_key
-
 PORT=5000
 ```
 
@@ -128,11 +158,25 @@ _(Vite will provide a local URL, usually `http://localhost:5173`. Open this in y
 
 ### Scores & Analytics (`/api/score`) _Requires JWT_
 
-| Method | Endpoint     | Description                                         |
-| ------ | ------------ | --------------------------------------------------- |
-| POST   | `/`          | Save a new practice session score                   |
-| GET    | `/`          | Get recent score history for the authenticated user |
-| GET    | `/dashboard` | Get aggregated dashboard stats (streaks, averages)  |
+| Method | Endpoint       | Description                                                                               |
+| ------ | -------------- | ----------------------------------------------------------------------------------------- |
+| POST   | `/`            | Save a new practice session score                                                         |
+| GET    | `/`            | Get recent score history (last 20) for the authenticated user                             |
+| GET    | `/dashboard`   | Get aggregated dashboard stats (KPIs, streaks, rank, module breakdown, recent activity)   |
+| GET    | `/leaderboard` | Get top 20 scores across all users, sorted by accuracy & WPM                              |
+| DELETE | `/:id`         | Delete a specific activity (own scores only) — reflects in Dashboard, Leaderboard & Atlas |
+
+### Upload (`/api/upload`)
+
+| Method | Endpoint | Description                                        |
+| ------ | -------- | -------------------------------------------------- |
+| POST   | `/`      | Upload a `.txt` file for custom paragraph practice |
+
+### Health (`/api/health`)
+
+| Method | Endpoint | Description                                       |
+| ------ | -------- | ------------------------------------------------- |
+| GET    | `/`      | Server health check with WPM target configuration |
 
 ---
 
@@ -153,6 +197,15 @@ _(Vite will provide a local URL, usually `http://localhost:5173`. Open this in y
 3. **Compare**: A custom Levenshtein distance algorithm determines if words match (≤ 30% error margin).
 4. **React State**: The transcript updates React state in real-time, triggering a re-evaluation and instantly updating DOM classes for highlighted words.
 
+### Activity Management
+
+1. **Dashboard View**: The "Recent Activity" section displays the last 10 sessions in a table with Date, Module, Accuracy, WPM, Speed, Feedback, and a delete action per row.
+2. **Delete Flow**: Clicking the 🗑️ button shows a confirmation dialog. On confirmation, a `DELETE /api/score/:id` request is sent.
+3. **Backend Validation**: The server verifies the score exists and belongs to the requesting user (ownership check via `userId`).
+4. **Atlas Sync**: The score document is permanently removed from MongoDB Atlas using `findByIdAndDelete`.
+5. **Dashboard Refresh**: After deletion, the entire dashboard reloads — recalculating all KPIs (avg accuracy, avg WPM, best scores, streak, global rank, module breakdown, speed feedback distribution).
+6. **Leaderboard Reflection**: Since the leaderboard queries MongoDB on each page load, deleted scores are automatically excluded from rankings.
+
 ---
 
 ## 📊 Scoring System
@@ -162,6 +215,16 @@ _(Vite will provide a local URL, usually `http://localhost:5173`. Open this in y
 ```
 (correct_words / total_words) × 100
 ```
+
+### Color-coded Accuracy Display
+
+| Accuracy Range | Color         | CSS Class    |
+| -------------- | ------------- | ------------ |
+| ≥ 85%          | 🟢 Mint Green | `text-mint`  |
+| ≥ 65%          | 🟡 Gold       | `text-gold`  |
+| < 65%          | 🔴 Coral Red  | `text-coral` |
+
+This color scheme is applied consistently across the **Dashboard** (Recent Activity table) and the **Leaderboard** (global rankings).
 
 ### WPM (Words Per Minute)
 
@@ -195,6 +258,16 @@ words_spoken / (elapsed_seconds / 60)
 - **Secondary Elements**: Coral red (`var(--coral)`) for errors/incorrect words.
 - **Accent Elements**: Vibrant Gold (`var(--gold)`) for highlights and active UI components.
 - **Glassmorphism**: Soft semi-transparent cards with subtle borders and backdrop blurs to create depth.
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] AI pronunciation feedback (Whisper API integration)
+- [ ] Multi-language support (es, fr, de, hi)
+- [ ] Advanced Progress charts (accuracy over time with Chart.js)
+- [ ] Difficulty auto-adjustment based on user history
+- [ ] Voice analysis (pitch, pace, pauses)
 
 ---
 
