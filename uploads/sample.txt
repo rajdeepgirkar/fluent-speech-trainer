@@ -1,9 +1,0 @@
-This is a full stack web application for improving communication skills through interactive
-speaking activities, featuring real time speech recognition, word by word highlighting,
-audio recording, and performance scoring.
-
-hi
-hello
-HOW ARE YOU
-I AM FINE THANK YOU
-
