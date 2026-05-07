@@ -6,15 +6,15 @@ Express.js backend for the Fluent Speech Trainer, providing a robust API for use
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|-----------|---------|
-| **Node.js** | JavaScript runtime environment |
-| **Express.js** | Web framework for building RESTful APIs |
-| **MongoDB & Mongoose** | NoSQL database and Object Data Modeling (ODM) |
-| **JSON Web Tokens (JWT)** | Secure, stateless authentication |
-| **Bcrypt.js** | Password hashing for user security |
-| **Multer** | Middleware for handling file uploads (audio/text) |
-| **Cors & Dotenv** | Cross-Origin Resource Sharing and environment management |
+| Technology                | Purpose                                                  |
+| ------------------------- | -------------------------------------------------------- |
+| **Node.js**               | JavaScript runtime environment                           |
+| **Express.js**            | Web framework for building RESTful APIs                  |
+| **MongoDB & Mongoose**    | NoSQL database and Object Data Modeling (ODM)            |
+| **JSON Web Tokens (JWT)** | Secure, stateless authentication                         |
+| **Bcrypt.js**             | Password hashing for user security                       |
+| **Multer**                | Middleware for handling file uploads (audio/text)        |
+| **Cors & Dotenv**         | Cross-Origin Resource Sharing and environment management |
 
 ---
 
@@ -48,10 +48,12 @@ server/
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
+
 - Node.js (v16+)
 - A MongoDB cluster (e.g., MongoDB Atlas) or local MongoDB instance
 
 ### 2. Environment Variables
+
 Create a `.env` file in the `server/` root directory with the following keys:
 
 ```env
@@ -85,19 +87,25 @@ The server will be available at `http://localhost:5000`.
 ## 🔌 Core Functionality & APIs
 
 ### 🔐 Authentication (`/api/auth`)
+
 Handles user registration and login securely.
+
 - `POST /api/auth/signup`: Validates email/password, hashes the password using `bcryptjs`, saves the user to MongoDB, and returns a signed JWT.
 - `POST /api/auth/login`: Verifies user credentials against the hashed password and issues a JWT.
 
 ### 📚 Content Delivery (`/api`)
+
 Serves practice material from static JSON files located in the `data/` directory.
+
 - `GET /api/twisters`: Returns all tongue twisters grouped by category.
 - `GET /api/twisters/session`: Returns a randomized set of 5 tongue twisters for a practice session.
 - `GET /api/paragraphs`: Returns all paragraphs grouped by difficulty.
 - `GET /api/paragraphs/random`: Returns a random paragraph based on a requested difficulty query parameter.
 
-### 📊 Scoring & Analytics (`/api/score`) — *Protected via JWT*
+### 📊 Scoring & Analytics (`/api/score`) — _Protected via JWT_
+
 Manages performance records and computes aggregated statistics. Requires the `Authorization: Bearer <token>` header.
+
 - `POST /api/score`: Saves a new session score including module name, accuracy (%), WPM, speed setting, and granular feedback.
 - `GET /api/score`: Retrieves the logged-in user's recent score history (latest 20 entries).
 - `GET /api/score/dashboard`: Computes real-time KPIs for the dashboard, including:
@@ -109,9 +117,11 @@ Manages performance records and computes aggregated statistics. Requires the `Au
 - `DELETE /api/score/:id`: Deletes a specific activity record. Enforces ownership (users can only delete their own scores).
 
 ### 📁 File Uploads (`/api/upload`)
+
 - `POST /api/upload`: Accepts file uploads (like `.txt` for custom paragraph practice) using `multer` and saves them to the local `/uploads` folder.
 
 ### 🏥 Health Check (`/api/health`)
+
 - `GET /api/health`: Returns a status ping along with the server's configured WPM targets (`slow`, `medium`, `fast`) for client-side syncing.
 
 ---
