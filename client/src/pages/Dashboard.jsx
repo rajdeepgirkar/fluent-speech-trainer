@@ -8,6 +8,7 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     loadDashboard();
@@ -23,6 +24,25 @@ export default function Dashboard() {
       setError('Failed to load dashboard. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteActivity = async (id, module) => {
+    const modLabel = module === 'tongue_twister' ? 'Tongue Twister' : 'Paragraph Reading';
+    const confirmed = window.confirm(
+      `Delete this ${modLabel} activity?\n\nThis will permanently remove it from your history and the leaderboard.`
+    );
+    if (!confirmed) return;
+
+    setDeletingId(id);
+    try {
+      await API.delete(`/api/score/${id}`);
+      // Reload dashboard to recalculate all stats
+      await loadDashboard();
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to delete activity. Please try again.');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -147,8 +167,8 @@ export default function Dashboard() {
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Last 10 sessions</span>
         </div>
         <div className="history-table">
-          <div className="history-row history-header">
-            <div>Date</div><div>Module</div><div>Accuracy</div><div>WPM</div><div>Speed</div><div>Feedback</div>
+          <div className="history-row history-header has-actions">
+            <div>Date</div><div>Module</div><div>Accuracy</div><div>WPM</div><div>Speed</div><div>Feedback</div><div></div>
           </div>
           {recent.length === 0 ? (
             <div className="empty-state"><p>No history yet.</p></div>
@@ -159,13 +179,23 @@ export default function Dashboard() {
               const fbClass = fb === 'Optimal' ? 'optimal' : fb === 'Too Fast' ? 'too-fast' : 'too-slow';
               const accClass = s.accuracy >= 85 ? 'text-mint' : s.accuracy >= 65 ? 'text-gold' : 'text-coral';
               return (
-                <div key={i} className="history-row">
-                  <div className="history-date">{s.createdAt ? s.createdAt.slice(0, 10) : '—'}</div>
+                <div key={s._id || i} className="history-row has-actions">
+                  <div className="history-date">{s.createdAt ? new Date(s.createdAt).toLocaleDateString('en-GB') : '—'}</div>
                   <div>{mod}</div>
                   <div className={`${accClass} fw-bold`}>{s.accuracy}%</div>
                   <div>{s.wpm > 0 ? `${s.wpm} WPM` : '—'}</div>
                   <div style={{ textTransform: 'capitalize' }}>{s.speedSetting || '—'}</div>
                   <div><span className={`lb-feedback ${fbClass}`}>{fb}</span></div>
+                  <div>
+                    <button
+                      className="btn-delete-activity"
+                      title="Delete this activity"
+                      disabled={deletingId === s._id}
+                      onClick={() => deleteActivity(s._id, s.module)}
+                    >
+                      {deletingId === s._id ? '⏳' : '🗑️'}
+                    </button>
+                  </div>
                 </div>
               );
             })

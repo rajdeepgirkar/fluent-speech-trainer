@@ -215,4 +215,30 @@ router.get('/leaderboard', async (req, res) => {
   }
 });
 
+// ──────────────────────────────────────────────────
+// DELETE /api/score/:id
+// Delete a specific score (only own scores)
+// ──────────────────────────────────────────────────
+router.delete('/:id', async (req, res) => {
+  try {
+    const score = await Score.findById(req.params.id);
+
+    if (!score) {
+      return res.status(404).json({ error: 'Score not found' });
+    }
+
+    // Ensure the user can only delete their own scores
+    if (score.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: 'Not authorized to delete this score' });
+    }
+
+    await Score.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true, message: 'Activity deleted successfully' });
+  } catch (error) {
+    console.error('Delete score error:', error.message);
+    res.status(500).json({ error: 'Failed to delete score' });
+  }
+});
+
 module.exports = router;

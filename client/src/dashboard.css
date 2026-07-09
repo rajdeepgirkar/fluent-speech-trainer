@@ -248,6 +248,39 @@
     .history-row {
         min-width: 600px
     }
+
+    .history-row.has-actions {
+        min-width: 680px
+    }
+}
+
+/* History row with action column */
+.history-row.has-actions {
+    grid-template-columns: 120px 1.5fr 1fr 1fr 1fr 1.5fr 48px
+}
+
+/* Delete Activity Button */
+.btn-delete-activity {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px 8px;
+    line-height: 1;
+    transition: all 0.2s ease;
+    opacity: 0.45
+}
+
+.btn-delete-activity:hover:not(:disabled) {
+    opacity: 1;
+    background: var(--coral-glow);
+    border-color: rgba(255, 107, 107, 0.3)
+}
+
+.btn-delete-activity:disabled {
+    cursor: not-allowed;
+    opacity: 0.3
 }
 
 /* Quick Actions */

@@ -113,7 +113,7 @@ export default function Leaderboard() {
               <div className="lb-module">
                 {entry.module === 'tongue_twister' ? '👅 Twister' : '📖 Paragraph'}
               </div>
-              <div className="lb-score">{entry.accuracy}%</div>
+              <div className={`lb-score fw-bold ${entry.accuracy >= 85 ? 'text-mint' : entry.accuracy >= 65 ? 'text-gold' : 'text-coral'}`}>{entry.accuracy}%</div>
               <div className="lb-wpm">{entry.wpm > 0 ? `${entry.wpm} WPM` : '—'}</div>
               <div>
                 <span className={`lb-feedback ${getFeedbackClass(entry.speedFeedback)}`}>
