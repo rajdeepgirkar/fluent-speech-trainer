@@ -1,27 +1,18 @@
-version: "3.9"
-
 services:
-
   backend:
-    build: ./server
+    image: rajdeep03/fluent-backend:latest
     container_name: fluent-backend
-
+    env_file:
+      - .env
+    restart: unless-stopped
     ports:
       - "5000:5000"
 
-    env_file:
-      - ./server/.env
-
-    restart: unless-stopped
-
   frontend:
-    build: ./client
+    image: rajdeep03/fluent-frontend:latest
     container_name: fluent-frontend
-
-    ports:
-      - "5173:80"
-
     depends_on:
       - backend
-
     restart: unless-stopped
+    ports:
+      - "80:80"
